@@ -1,0 +1,81 @@
+
+version: 2
+
+sources:
+  - name: bronze
+    database: exam
+    schema: bronze
+    tables:
+      - name: artist
+        description: "List of Artists"
+        columns:
+          - name: artistId
+            description: "ID of Artist"
+            tests:
+              - unique
+              - not_null
+      - name: album
+        description: "List of Albums"
+        columns:
+          - name: albumId
+            description: "ID of Artist"
+            tests:
+              - unique
+              - not_null
+          - name: artistId
+            tests:
+              - not_null
+      - name: mediatype
+        description: "List of Media"
+        columns:
+          - name: mediaTypeId
+            description: "ID of Media Type"
+            tests:
+              - unique
+              - not_null 
+      - name: genre
+        description: "List of Genre"
+        columns:
+          - name: genreId
+            description: "ID of Genre"
+            tests:
+              - unique
+              - not_null
+      - name: track
+        description: "Track"
+        columns:
+          - name: trackId
+            description: "ID of Track"
+            tests:
+              - unique
+              - not_null
+          - name: AlbumId
+            tests:
+              - not_null
+          - name: MediaTypeId
+            tests:
+              - not_null
+          - name: GenreId
+            tests:
+              - not_null
+      - name: playlist
+        description: "List of Playlist"
+        columns:
+          - name: playlistId
+            description: "ID of Playlist"
+            tests:
+              - unique
+              - not_null
+      - name: playlisttrack
+        description: "Playlist/Track relationship"
+        columns:
+          - name: playlistId
+            description: "ID of Playlist"
+            tests:
+              - not_null
+          - name: trackId
+            description: "ID of Playlist"
+            tests:
+              - not_null
+
+  

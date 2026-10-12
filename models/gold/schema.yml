@@ -1,0 +1,145 @@
+
+version: 2
+
+
+models:
+  - name: dim_artist
+    description: "List of Artists"
+    columns:
+      - name: artistId
+        description: "ID of Artist"
+        tests:
+          - unique
+          - not_null
+  - name: dim_album
+    description: "List of Albums"
+    columns:
+      - name: albumId
+        description: "ID of Artist"
+        tests:
+          - unique
+          - not_null
+      - name: artistId
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_artist')
+                field: artistId
+  - name: dim_mediatype
+    description: "List of Media"
+    columns:
+      - name: mediaTypeId
+        description: "ID of Media Type"
+        tests:
+          - unique
+          - not_null 
+  - name: dim_genre
+    description: "List of Genre"
+    columns:
+      - name: genreId
+        description: "ID of Genre"
+        tests:
+          - unique
+          - not_null
+  - name: fact_track
+    description: "Track Fact for Star schema"
+    columns:
+      - name: trackId
+        description: "ID of Track"
+        tests:
+          - unique
+          - not_null
+      - name: AlbumId
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_album')
+                field: albumId
+      - name: MediaTypeId
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_mediatype')
+                field: mediaTypeId
+      - name: GenreId
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_genre')
+                field: GenreId
+  - name: dim_playlist
+    description: "List of Playlist"
+    columns:
+      - name: playlistId
+        description: "ID of Playlist"
+        tests:
+          - unique
+          - not_null
+  - name: bridge_playlisttrack
+    description: "Playlist/Track relationship"
+    columns:
+      - name: playlistId
+        description: "ID of Playlist"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_playlist')
+                field: playlistId
+      - name: trackId
+        description: "ID of Track"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fact_track')
+                field: trackId
+  - name: bridge_trackcomposer
+    description: "Composer/Track relationship"
+    columns:
+      - name: ComposerId
+        description: "ID of Composer"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_composer')
+                field: composerId
+      - name: trackId
+        description: "ID of Track"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fact_track')
+                field: trackId
+  - name: dim_composer
+    description: "List of Composer"
+    columns:
+      - name: composerId
+        description: "ID of Composer"
+        tests:
+          - unique
+          - not_null
+  - name: vw1_titre_album_plus_1CD
+    description: "Q1  Donnez les titres des albums qui ont plus de 1 CD."
+  - name: vw2_morceau_2000_a_2002
+    description: "Q2 Donnez les morceaux produits en 2000 ou en 2002."
+  - name: vw3_rock_et_jazz
+    description: "Q3 Donnez le nom et le compositeur des morceaux de Rock et de Jazz."
+  - name: vw4_10_album_plus_long
+    description: "Q4 Donnez les 10 albums les plus longs."
+  - name: vw5_nb_album_par_artiste
+    description: "Q5 Donnez le nombre d'albums produits pour chaque artiste."
+  - name: vw6_nb_morceau_par_artist
+    description: "Q6 Donnez le nombre de morceaux produits par chaque artiste."
+  - name: vw7_genre_plus_ecoute_2000s 
+    description: "Q7 Donnez le genre de musique le plus écouté dans les années 2000. -- Annes 2000 -> 2000 a 2009"
+  - name: vw8_playlist_plus_4minutes
+    description: "Q8 Donnez les noms de toutes les playlists où figurent des morceaux de plus de 4 minutes."
+  - name: vw9_rock_artiste_en_france
+    description: "Q9 Donnez les morceaux de Rock dont les artistes sont en France."
+  - name: vw10_moyenne_par_genre
+    description: "Q10 Donnez la moyenne des tailles des morceaux par genre musical."
+  - name: vw11_playlist_artist_avant_1990
+    description: "Q11 Donnez les playlist où figurent des morceaux d'artistes nés avant 1990."

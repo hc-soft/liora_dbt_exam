@@ -1,0 +1,114 @@
+
+version: 2
+
+models:
+  - name: stg_composer
+    description: "List of Composer"
+    columns:
+      - name: composerId
+        description: "ID of Composer"
+        tests:
+          - unique
+          - not_null
+  - name: stg_album
+    description: "List of Albums"
+    columns:
+      - name: albumId
+        description: "ID of Artist"
+        tests:
+          - unique
+          - not_null
+      - name: artistId
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_artist')
+                field: artistId
+  - name: stg_mediatype
+    description: "List of Media"
+    columns:
+      - name: mediaTypeId
+        description: "ID of Media Type"
+        tests:
+          - unique
+          - not_null 
+  - name: stg_genre
+    description: "List of Genre"
+    columns:
+      - name: genreId
+        description: "ID of Genre"
+        tests:
+          - unique
+          - not_null
+  - name: stg_track
+    description: "Track"
+    columns:
+      - name: trackId
+        description: "ID of Track"
+        tests:
+          - unique
+          - not_null
+      - name: AlbumId
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_album')
+                field: albumId
+      - name: MediaTypeId
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_mediatype')
+                field: mediaTypeId
+      - name: GenreId
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_genre')
+                field: GenreId
+  - name: stg_playlist
+    description: "List of Playlist"
+    columns:
+      - name: playlistId
+        description: "ID of Playlist"
+        tests:
+          - unique
+          - not_null
+  - name: stg_playlisttrack
+    description: "Playlist/Track relationship"
+    columns:
+      - name: playlistId
+        description: "ID of Playlist"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_playlist')
+                field: playlistId
+      - name: trackId
+        description: "ID of Playlist"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_track')
+                field: trackId
+  - name: stg_trackcomposer
+    description: "Composer/Track relationship"
+    columns:
+      - name: ComposerId
+        description: "ID of Composer"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_composer')
+                field: composerId
+      - name: trackId
+        description: "ID of Track"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_track')
+                field: trackId

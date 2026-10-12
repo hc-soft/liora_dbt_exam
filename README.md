@@ -3,6 +3,19 @@ Projet Exam CYR DBT
 # Overview
 Projet DBT/Snowflake pour Formation Data Engineer
 
+# Info Snowflake
+Database : exam
+Schema : exam
+
+Utilisation du Scriot init.sql utilisé lors de l'exam Snowflake pour charger les tables de base dans la Database exam
+
+J'ai appliqué la method medaillon :
+ - bronze : Tables chargées par le script init
+ - Silver : Vues basée sur tables Bronze et separation des composer
+ - Gold : Architecture en etoile (star) et vues
+
+le dbtLog contient le build et le run (version fonctionnelle , j'ai supprimé les different essais et correction d'erreur)
+
 ### Using the starter project
 Try running the following commands:
 - dbt run
