@@ -1,7 +1,9 @@
-Welcome to your new dbt project!
+Projet Exam CYR DBT 
+
+# Overview
+Projet DBT/Snowflake pour Formation Data Engineer
 
 ### Using the starter project
-
 Try running the following commands:
 - dbt run
 - dbt test
